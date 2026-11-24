@@ -1,0 +1,21 @@
+title: Sasha Muratov
+description: Data Scientist — ML Systems, Genomics, Security
+url: "https://sashamuratov.com"
+baseurl: ""
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "project"
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
