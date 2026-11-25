@@ -1,30 +1,23 @@
 # Setup Instructions for mooratov.github.io
 
-## 1. Create the GitHub repo
+## Status (as of 2026-11-24)
 
-Go to https://github.com/new
-- Name: `mooratov.github.io`
-- Visibility: Public
-- Do NOT initialize with README, .gitignore, or license (files already exist locally)
+- [x] Repo created: https://github.com/mooratov/mooratov.github.io
+- [x] Jekyll site pushed to main branch
+- [x] gh CLI installed and authenticated
+- [x] Custom domain: mooratov.github.io redirects to sashamuratov.com
+- [ ] DNS setup at Network Solutions (site showing blank — this is likely the issue)
+- [ ] HTTPS enforced on GitHub Pages
+- [ ] Google Scholar link updated in contact/index.md
+- [ ] Git author config set
 
-## 2. Push the local site
+## 1. Fix blank page — DNS setup (Network Solutions)
 
-```bash
-cd ~/mooratov.github.io
-git init
-git add .
-git commit -m "Initial site"
-git remote add origin git@github.com:mooratov/mooratov.github.io.git
-git push -u origin main
-```
+The site redirects to sashamuratov.com but shows blank, which likely means DNS
+is not fully configured. Log into Network Solutions and ensure these DNS records
+exist for `sashamuratov.com`:
 
-GitHub Pages will automatically build the Jekyll site from the main branch.
-
-## 3. DNS setup (Network Solutions)
-
-Log into Network Solutions and add these DNS records for `sashamuratov.com`:
-
-**A records** (all four):
+**A records** (all four — these point the root domain to GitHub Pages):
 - 185.199.108.153
 - 185.199.109.153
 - 185.199.110.153
@@ -34,16 +27,30 @@ Log into Network Solutions and add these DNS records for `sashamuratov.com`:
 - Host: `www`
 - Points to: `mooratov.github.io`
 
-DNS propagation can take up to 48 hours but usually resolves faster.
+DNS propagation can take up to 48 hours but usually resolves within an hour.
 
-## 4. Enable HTTPS on GitHub
+If DNS is already set and the page is still blank, check the GitHub Pages build:
+- Go to https://github.com/mooratov/mooratov.github.io/actions
+- Look for a failed "pages build and deployment" workflow
+- The build log will show any Jekyll errors
 
-After DNS propagates:
+## 2. Enable HTTPS on GitHub
+
+After the site loads correctly:
 - Go to https://github.com/mooratov/mooratov.github.io/settings/pages
 - Confirm custom domain shows `sashamuratov.com`
 - Check "Enforce HTTPS"
 
-## 5. Customize content
+## 3. Set git author info
+
+```bash
+git config --global user.name "Sasha Muratov"
+git config --global user.email "mooratov@gmail.com"
+```
+
+## 4. Customize content
+
+The local repo is at `~/mooratov.github.io-repo/`.
 
 - **Bio**: Edit `index.md`
 - **Contact links**: Edit `contact/index.md` (update Google Scholar URL)
@@ -64,16 +71,15 @@ Write the full project description here in Markdown.
 
 Projects automatically appear on the home page and projects listing.
 
-## 6. Optional: Install GitHub CLI
-
+After editing, push changes:
 ```bash
-brew install gh
-gh auth login
+cd ~/mooratov.github.io-repo
+git add .
+git commit -m "Description of changes"
+git push
 ```
 
-This lets Claude Code create repos, push, and manage GitHub from the terminal.
-
-## 7. Optional: Streamlit demos
+## 5. Optional: Streamlit demos
 
 For interactive project demos:
 1. Create a separate repo for the Streamlit app
